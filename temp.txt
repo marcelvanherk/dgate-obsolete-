@@ -1,0 +1,371 @@
+
+C:\quirt\comps\exe\dgate>IF NOT EXIST jasperlib.obj copy jasper-1.900.1-6ct\jasperlib.obj jasperlib.obj 
+
+C:\quirt\comps\exe\dgate>IF NOT EXIST lua.obj copy lua_5.1.4\lua.obj lua.obj 
+
+C:\quirt\comps\exe\dgate>IF NOT EXIST lua.obj copy lua_5.1.4\lua.o lua.obj 
+
+C:\quirt\comps\exe\dgate>IF NOT EXIST lua.obj cd lua_5.1.4;amake;cd ..\ 
+
+C:\quirt\comps\exe\dgate>set spath=C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\GnuWin32\bin;C:\Program Files\OpenVPN\bin 
+
+C:\quirt\comps\exe\dgate>set sinclude= 
+
+C:\quirt\comps\exe\dgate>set sLIB= 
+
+C:\quirt\comps\exe\dgate>set watcom=c:\lang\ms8 
+
+C:\quirt\comps\exe\dgate>set path=c:\lang\ms8\bin;C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\GnuWin32\bin;C:\Program Files\OpenVPN\bin 
+
+C:\quirt\comps\exe\dgate>set include=c:\lang\ms8\include;\quirt\comps\dll\cqdicom;c:\Program Files\MySQL\MySQL Server 5.5\include;c:\quirt\comps\exe\dgate\lua_5.1.4 
+
+C:\quirt\comps\exe\dgate>set LIB=c:\lang\ms8\lib 
+
+C:\quirt\comps\exe\dgate>nmake  
+	cl /Zi /MT  dgate.obj dgateweb.obj dgatehl7.obj luaint.obj odbci.obj parse.obj parseargs.obj  dbsql.obj dgatefn.obj loadddo.obj dprintf.obj regen.obj  device.obj vrtosql.obj nkiqrsop.obj jpegconv.obj lex.obj  xvgifwr.obj jpeg_encoder.obj configpacs.cxx sqlite3.obj jasperlib.obj lua.obj \quirt\comps\dll\cqdicom\dicom.lib libjpeg.lib odbc32.lib odbccp32.lib wsock32.lib advapi32.lib user32.lib kernel32.lib /Fmdgate.map
+configpacs.cxx
+c:\quirt\comps\dll\cqdicom\array.thh(87) : error C2146: syntax error : missing ';' before identifier 'ClearType'
+        c:\quirt\comps\dll\cqdicom\array.thh(132) : see reference to class template instantiation 'Array<DATATYPE>' being compiled
+c:\quirt\comps\dll\cqdicom\array.thh(87) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(87) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(91) : error C2146: syntax error : missing ';' before identifier 'RemoveAt'
+c:\quirt\comps\dll\cqdicom\array.thh(91) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(91) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(91) : warning C4183: 'RemoveAt': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\dll\cqdicom\array.thh(92) : error C2146: syntax error : missing ';' before identifier 'Clear'
+c:\quirt\comps\dll\cqdicom\array.thh(92) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(93) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\dll\cqdicom\array.thh(98) : warning C4183: 'Clear': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(61) : error C2146: syntax error : missing ';' before identifier 'iswhitespacea'
+C:\quirt\comps\dll\cqdicom\amap.hpp(61) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(61) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(61) : warning C4183: 'iswhitespacea': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(62) : error C2146: syntax error : missing ';' before identifier 'getItemNotEnd'
+C:\quirt\comps\dll\cqdicom\amap.hpp(62) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(62) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(62) : warning C4183: 'getItemNotEnd': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(63) : error C2146: syntax error : missing ';' before identifier 'AppendMapToOpenFile'
+C:\quirt\comps\dll\cqdicom\amap.hpp(63) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(63) : error C2061: syntax error : identifier 'FILE'
+C:\quirt\comps\dll\cqdicom\amap.hpp(63) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(63) : warning C4183: 'AppendMapToOpenFile': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(70) : error C2146: syntax error : missing ';' before identifier 'DeleteEntry'
+C:\quirt\comps\dll\cqdicom\amap.hpp(70) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(70) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(70) : warning C4183: 'DeleteEntry': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(71) : error C2146: syntax error : missing ';' before identifier 'GetACRNemaNoWild'
+C:\quirt\comps\dll\cqdicom\amap.hpp(71) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(71) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(71) : warning C4183: 'GetACRNemaNoWild': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(72) : error C2146: syntax error : missing ';' before identifier 'GetACRNema'
+C:\quirt\comps\dll\cqdicom\amap.hpp(72) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(72) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(72) : warning C4183: 'GetACRNema': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(86) : error C2146: syntax error : missing ';' before identifier 'InitACRNemaAddressArray'
+C:\quirt\comps\dll\cqdicom\amap.hpp(86) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(86) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(86) : warning C4183: 'InitACRNemaAddressArray': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(88) : error C2146: syntax error : missing ';' before identifier 'ReplaceEntry'
+C:\quirt\comps\dll\cqdicom\amap.hpp(88) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(89) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(89) : warning C4183: 'ReplaceEntry': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(90) : error C2146: syntax error : missing ';' before identifier 'WriteAMapToAFile'
+C:\quirt\comps\dll\cqdicom\amap.hpp(90) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(90) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(90) : warning C4183: 'WriteAMapToAFile': missing return type; assumed to be a member function returning 'int'
+C:\quirt\comps\dll\cqdicom\amap.hpp(91) : error C2146: syntax error : missing ';' before identifier 'WriteAMapToTheFile'
+C:\quirt\comps\dll\cqdicom\amap.hpp(91) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(91) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\amap.hpp(91) : warning C4183: 'WriteAMapToTheFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(104) : error C2146: syntax error : missing ';' before identifier 'CacheVirtualData'
+c:\quirt\comps\exe\dgate\configpacs.hpp(104) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(104) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(108) : error C2146: syntax error : missing ';' before identifier 'DecompressNon16BitsJpeg'
+c:\quirt\comps\exe\dgate\configpacs.hpp(108) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(108) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(113) : error C2146: syntax error : missing ';' before identifier 'DoubleBackSlashToDB'
+c:\quirt\comps\exe\dgate\configpacs.hpp(113) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(113) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(115) : error C2146: syntax error : missing ';' before identifier 'EnableComputedFields'
+c:\quirt\comps\exe\dgate\configpacs.hpp(115) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(115) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(116) : error C2146: syntax error : missing ';' before identifier 'EnableReadAheadThread'
+c:\quirt\comps\exe\dgate\configpacs.hpp(116) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(116) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(121) : error C2146: syntax error : missing ';' before identifier 'FixKodak'
+c:\quirt\comps\exe\dgate\configpacs.hpp(121) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(121) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(122) : error C2146: syntax error : missing ';' before identifier 'FixPhilips'
+c:\quirt\comps\exe\dgate\configpacs.hpp(122) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(122) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(125) : error C2146: syntax error : missing ';' before identifier 'ForwardAssociationRelease'
+c:\quirt\comps\exe\dgate\configpacs.hpp(125) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(125) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(130) : error C2146: syntax error : missing ';' before identifier 'IgnoreMAGDeviceThreshHold'
+c:\quirt\comps\exe\dgate\configpacs.hpp(130) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(130) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(131) : error C2146: syntax error : missing ';' before identifier 'IgnoreOutOfMemoryErrors'
+c:\quirt\comps\exe\dgate\configpacs.hpp(131) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(131) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(134) : error C2146: syntax error : missing ';' before identifier 'ImportExportDragAndDrop'
+c:\quirt\comps\exe\dgate\configpacs.hpp(134) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(134) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(153) : error C2146: syntax error : missing ';' before identifier 'NoDicomCheck'
+c:\quirt\comps\exe\dgate\configpacs.hpp(153) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(153) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(156) : error C2146: syntax error : missing ';' before identifier 'PackDBF'
+c:\quirt\comps\exe\dgate\configpacs.hpp(156) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(156) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(167) : error C2146: syntax error : missing ';' before identifier 'RetryForwardFailed'
+c:\quirt\comps\exe\dgate\configpacs.hpp(167) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(167) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(168) : error C2146: syntax error : missing ';' before identifier 'SendUpperCaseAE'
+c:\quirt\comps\exe\dgate\configpacs.hpp(168) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(168) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(185) : error C2146: syntax error : missing ';' before identifier 'UseBuiltInJPEG'
+c:\quirt\comps\exe\dgate\configpacs.hpp(185) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(185) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(186) : error C2146: syntax error : missing ';' before identifier 'UseEscapeStringConstants'
+c:\quirt\comps\exe\dgate\configpacs.hpp(186) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(186) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(195) : error C2146: syntax error : missing ';' before identifier 'WebPush'
+c:\quirt\comps\exe\dgate\configpacs.hpp(195) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(195) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(196) : error C2146: syntax error : missing ';' before identifier 'WebReadOnly'
+c:\quirt\comps\exe\dgate\configpacs.hpp(196) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(196) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(329) : error C2146: syntax error : missing ';' before identifier 'dumpIni'
+c:\quirt\comps\exe\dgate\configpacs.hpp(329) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(329) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(375) : error C2146: syntax error : missing ';' before identifier 'DeleteNameFromIniFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(375) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(375) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(375) : warning C4183: 'DeleteNameFromIniFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(378) : error C2146: syntax error : missing ';' before identifier 'DeleteNameFromIniFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(378) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(378) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(378) : warning C4183: 'DeleteNameFromIniFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(412) : error C2146: syntax error : missing ';' before identifier 'IniDumped'
+c:\quirt\comps\exe\dgate\configpacs.hpp(412) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(412) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(412) : warning C4183: 'IniDumped': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(414) : error C2146: syntax error : missing ';' before identifier 'IniReadDone'
+c:\quirt\comps\exe\dgate\configpacs.hpp(414) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(414) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(414) : warning C4183: 'IniReadDone': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(418) : error C2146: syntax error : missing ';' before identifier 'ReadIni'
+c:\quirt\comps\exe\dgate\configpacs.hpp(418) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(418) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(418) : warning C4183: 'ReadIni': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(420) : error C2146: syntax error : missing ';' before identifier 'SetBasePath'
+c:\quirt\comps\exe\dgate\configpacs.hpp(420) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(420) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(420) : warning C4183: 'SetBasePath': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(422) : error C2146: syntax error : missing ';' before identifier 'SetIniFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(422) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(422) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(422) : warning C4183: 'SetIniFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(424) : error C2146: syntax error : missing ';' before identifier 'WriteToIni'
+c:\quirt\comps\exe\dgate\configpacs.hpp(424) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(424) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(424) : warning C4183: 'WriteToIni': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(426) : error C2146: syntax error : missing ';' before identifier 'WriteToIni'
+c:\quirt\comps\exe\dgate\configpacs.hpp(426) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(426) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(426) : warning C4183: 'WriteToIni': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(428) : error C2146: syntax error : missing ';' before identifier 'addToCharArray'
+c:\quirt\comps\exe\dgate\configpacs.hpp(428) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(428) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(428) : warning C4183: 'addToCharArray': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(429) : error C2146: syntax error : missing ';' before identifier 'addToIntArray'
+c:\quirt\comps\exe\dgate\configpacs.hpp(429) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(429) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(429) : warning C4183: 'addToIntArray': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(430) : error C2146: syntax error : missing ';' before identifier 'chechThreadError'
+c:\quirt\comps\exe\dgate\configpacs.hpp(430) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(430) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(430) : warning C4183: 'chechThreadError': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(438) : error C2146: syntax error : missing ';' before identifier 'errorToBuffer'
+c:\quirt\comps\exe\dgate\configpacs.hpp(438) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(438) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(438) : warning C4183: 'errorToBuffer': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(448) : error C2146: syntax error : missing ';' before identifier 'getBoolWithTemp'
+c:\quirt\comps\exe\dgate\configpacs.hpp(448) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(448) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(448) : warning C4183: 'getBoolWithTemp': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(462) : error C2146: syntax error : missing ';' before identifier 'goToNextDataLine'
+c:\quirt\comps\exe\dgate\configpacs.hpp(462) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(462) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(462) : warning C4183: 'goToNextDataLine': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(463) : error C2146: syntax error : missing ';' before identifier 'goToNextSection'
+c:\quirt\comps\exe\dgate\configpacs.hpp(463) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(463) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(463) : warning C4183: 'goToNextSection': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(464) : error C2146: syntax error : missing ';' before identifier 'goToStartIsBlank'
+c:\quirt\comps\exe\dgate\configpacs.hpp(464) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(464) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(464) : warning C4183: 'goToStartIsBlank': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(465) : error C2146: syntax error : missing ';' before identifier 'goToStartOfName'
+c:\quirt\comps\exe\dgate\configpacs.hpp(465) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(465) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(465) : warning C4183: 'goToStartOfName': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(468) : error C2146: syntax error : missing ';' before identifier 'isIEGroup'
+c:\quirt\comps\exe\dgate\configpacs.hpp(468) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(468) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(468) : warning C4183: 'isIEGroup': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(469) : error C2146: syntax error : missing ';' before identifier 'keepLine'
+c:\quirt\comps\exe\dgate\configpacs.hpp(469) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(469) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(469) : warning C4183: 'keepLine': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(471) : error C2146: syntax error : missing ';' before identifier 'lstrieq'
+c:\quirt\comps\exe\dgate\configpacs.hpp(471) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(471) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(471) : warning C4183: 'lstrieq': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(472) : error C2146: syntax error : missing ';' before identifier 'lstrileq'
+c:\quirt\comps\exe\dgate\configpacs.hpp(472) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(472) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(472) : warning C4183: 'lstrileq': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(476) : error C2146: syntax error : missing ';' before identifier 'openNewConfigFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(476) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(476) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(476) : warning C4183: 'openNewConfigFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(477) : error C2146: syntax error : missing ';' before identifier 'printAllocateError'
+c:\quirt\comps\exe\dgate\configpacs.hpp(477) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(477) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(477) : warning C4183: 'printAllocateError': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(478) : error C2146: syntax error : missing ';' before identifier 'readIniFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(478) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(478) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(478) : warning C4183: 'readIniFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(479) : error C2146: syntax error : missing ';' before identifier 'readlua'
+c:\quirt\comps\exe\dgate\configpacs.hpp(479) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(479) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(479) : warning C4183: 'readlua': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(480) : error C2146: syntax error : missing ';' before identifier 'readScripts'
+c:\quirt\comps\exe\dgate\configpacs.hpp(480) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(480) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(480) : warning C4183: 'readScripts': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(481) : error C2146: syntax error : missing ';' before identifier 'readsourceLines'
+c:\quirt\comps\exe\dgate\configpacs.hpp(481) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(481) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(481) : warning C4183: 'readsourceLines': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(482) : error C2146: syntax error : missing ';' before identifier 'readsscscp'
+c:\quirt\comps\exe\dgate\configpacs.hpp(482) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(482) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(482) : warning C4183: 'readsscscp': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(484) : error C2146: syntax error : missing ';' before identifier 'readUknownSection'
+c:\quirt\comps\exe\dgate\configpacs.hpp(484) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(484) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(484) : warning C4183: 'readUknownSection': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(485) : error C2146: syntax error : missing ';' before identifier 'readwadoservers'
+c:\quirt\comps\exe\dgate\configpacs.hpp(485) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(485) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(485) : warning C4183: 'readwadoservers': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(486) : error C2146: syntax error : missing ';' before identifier 'readwebdefaults'
+c:\quirt\comps\exe\dgate\configpacs.hpp(486) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(486) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(486) : warning C4183: 'readwebdefaults': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(493) : error C2146: syntax error : missing ';' before identifier 'setStringForArray'
+c:\quirt\comps\exe\dgate\configpacs.hpp(493) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(493) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(493) : warning C4183: 'setStringForArray': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(496) : error C2146: syntax error : missing ';' before identifier 'skipComments'
+c:\quirt\comps\exe\dgate\configpacs.hpp(496) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(496) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(496) : warning C4183: 'skipComments': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(497) : error C2146: syntax error : missing ';' before identifier 'swapConfigFiles'
+c:\quirt\comps\exe\dgate\configpacs.hpp(497) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(497) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(497) : warning C4183: 'swapConfigFiles': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(500) : error C2146: syntax error : missing ';' before identifier 'unknownEntry'
+c:\quirt\comps\exe\dgate\configpacs.hpp(500) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(500) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(500) : warning C4183: 'unknownEntry': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(502) : error C2146: syntax error : missing ';' before identifier 'writeByPutParms'
+c:\quirt\comps\exe\dgate\configpacs.hpp(502) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(502) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(502) : warning C4183: 'writeByPutParms': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(503) : error C2146: syntax error : missing ';' before identifier 'writeNameValue'
+c:\quirt\comps\exe\dgate\configpacs.hpp(503) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(503) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(503) : warning C4183: 'writeNameValue': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(504) : error C2146: syntax error : missing ';' before identifier 'writeTonewConfigFile'
+c:\quirt\comps\exe\dgate\configpacs.hpp(504) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(504) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+c:\quirt\comps\exe\dgate\configpacs.hpp(504) : warning C4183: 'writeTonewConfigFile': missing return type; assumed to be a member function returning 'int'
+c:\quirt\comps\exe\dgate\configpacs.hpp(412) : error C2065: 'dumpIni' : undeclared identifier
+C:\quirt\comps\dll\cqdicom\file.hpp(27) : error C2061: syntax error : identifier 'BOOL'
+C:\quirt\comps\dll\cqdicom\file.hpp(29) : error C2061: syntax error : identifier 'BOOL'
+C:\quirt\comps\dll\cqdicom\util.h(44) : error C2146: syntax error : missing ';' before identifier 'uniq'
+C:\quirt\comps\dll\cqdicom\util.h(44) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(44) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(45) : error C2146: syntax error : missing ';' before identifier 'uniq32'
+C:\quirt\comps\dll\cqdicom\util.h(45) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(45) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(46) : error C2146: syntax error : missing ';' before identifier 'uniq16'
+C:\quirt\comps\dll\cqdicom\util.h(46) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(46) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(47) : error C2146: syntax error : missing ';' before identifier 'uniq8'
+C:\quirt\comps\dll\cqdicom\util.h(47) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(47) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(48) : error C2146: syntax error : missing ';' before identifier 'uniq8odd'
+C:\quirt\comps\dll\cqdicom\util.h(48) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(48) : error C2086: 'int UINT8' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(47) : see declaration of 'UINT8'
+C:\quirt\comps\dll\cqdicom\util.h(48) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(49) : error C2146: syntax error : missing ';' before identifier 'uniq16odd'
+C:\quirt\comps\dll\cqdicom\util.h(49) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(49) : error C2086: 'int UINT16' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(46) : see declaration of 'UINT16'
+C:\quirt\comps\dll\cqdicom\util.h(49) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(53) : error C2146: syntax error : missing ';' before identifier 'ConvertNumber'
+C:\quirt\comps\dll\cqdicom\util.h(53) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(53) : error C2086: 'int UINT16' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(46) : see declaration of 'UINT16'
+C:\quirt\comps\dll\cqdicom\util.h(53) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(54) : error C2146: syntax error : missing ';' before identifier 'Hex2Dec'
+C:\quirt\comps\dll\cqdicom\util.h(54) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(54) : error C2086: 'int UINT16' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(46) : see declaration of 'UINT16'
+C:\quirt\comps\dll\cqdicom\util.h(54) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(55) : error C2146: syntax error : missing ';' before identifier 'secofday'
+C:\quirt\comps\dll\cqdicom\util.h(55) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(55) : error C2086: 'int UINT' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(44) : see declaration of 'UINT'
+C:\quirt\comps\dll\cqdicom\util.h(55) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(56) : error C2146: syntax error : missing ';' before identifier 'SpaceMem'
+C:\quirt\comps\dll\cqdicom\util.h(56) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(56) : error C2065: 'BYTE' : undeclared identifier
+C:\quirt\comps\dll\cqdicom\util.h(56) : error C2059: syntax error : ','
+C:\quirt\comps\dll\cqdicom\util.h(60) : error C2146: syntax error : missing ';' before identifier 'streq'
+C:\quirt\comps\dll\cqdicom\util.h(60) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(60) : error C2086: 'int BOOL' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(56) : see declaration of 'BOOL'
+C:\quirt\comps\dll\cqdicom\util.h(60) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(61) : error C2146: syntax error : missing ';' before identifier 'strneq'
+C:\quirt\comps\dll\cqdicom\util.h(61) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(61) : error C2086: 'int BOOL' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(56) : see declaration of 'BOOL'
+C:\quirt\comps\dll\cqdicom\util.h(61) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(62) : error C2146: syntax error : missing ';' before identifier 'strieq'
+C:\quirt\comps\dll\cqdicom\util.h(62) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(62) : error C2086: 'int BOOL' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(56) : see declaration of 'BOOL'
+C:\quirt\comps\dll\cqdicom\util.h(62) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(63) : error C2146: syntax error : missing ';' before identifier 'strnieq'
+C:\quirt\comps\dll\cqdicom\util.h(63) : error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\quirt\comps\dll\cqdicom\util.h(63) : error C2086: 'int BOOL' : redefinition
+        C:\quirt\comps\dll\cqdicom\util.h(56) : see declaration of 'BOOL'
+C:\quirt\comps\dll\cqdicom\util.h(63) : fatal error C1003: error count exceeds 100; stopping compilation
+
+C:\quirt\comps\exe\dgate>set path=C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;C:\Program Files\MySQL\MySQL Server 5.5\bin;C:\Program Files\GnuWin32\bin;C:\Program Files\OpenVPN\bin 
+
+C:\quirt\comps\exe\dgate>set spath= 
+
+C:\quirt\comps\exe\dgate>set include= 
+
+C:\quirt\comps\exe\dgate>set sinclude= 
+
+C:\quirt\comps\exe\dgate>set LIB= 
+
+C:\quirt\comps\exe\dgate>set sLIB= 

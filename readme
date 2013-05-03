@@ -1,0 +1,6 @@
+This the core component of the Conquest DICOM server for version 1.4.18.
+
+It contains many code changes by Bruce Barton making it well suitable to 
+run and compile on any Windows or Linux system.
+
+This is an alpha version. For production work use 1.4.17beta2.
