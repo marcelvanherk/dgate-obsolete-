@@ -6,6 +6,7 @@
 bcb 20120710  Created
 bcb 20130226  Replaced gpps with IniValue class.  Removed all globals now in IniValue class.
                 Version to 1.4.18a.
+mvh 20130522  Fixed incorrect case of dicomworklist name found by marek
 */
 
 
@@ -224,7 +225,7 @@ void ProcessHL7Data(char *data)
       fields[strlen(fields)-1]=0;	// remove trailing ,
       values[strlen(values)-1]=0;	// remove trailing ,
 
-      DB.AddRecord("dicomworklist", fields, values);
+      DB.AddRecord(WorkListTableName, fields, values);
       SystemDebug.printf("Entering modality worklist fields: %s\n", fields);  
       QueryFromGui++;
 
