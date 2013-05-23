@@ -225,7 +225,7 @@ void ProcessHL7Data(char *data)
       fields[strlen(fields)-1]=0;	// remove trailing ,
       values[strlen(values)-1]=0;	// remove trailing ,
 
-      DB.AddRecord(WorkListTableName, fields, values);
+      DB.AddRecord("DICOMWorkList", fields, values);
       SystemDebug.printf("Entering modality worklist fields: %s\n", fields);  
       QueryFromGui++;
 
