@@ -20,6 +20,7 @@
  bcb 20130226: Replaced gpps with IniValue class.  Removed all globals now in IniValue class, fix warinigs.
                 Made ACRNemaClass a singleton.  Version to 1.4.18a.
  bcb 20130313: Merged with 1.4.17a and b.  Fixed size warnings and lua 5.2 code.
+ mvh 20130523: Reset dummyddo to avoid incorrect freeing of what it points to
 */
 
 #include "luaint.hpp"
@@ -1774,6 +1775,8 @@ const char *do_lua(lua_State **L, const char *cmd, struct scriptdata *sd)//bcb m
   if (!sd->DDO) 
   { sd->DDO = dummyddo = new(DICOMDataObject);
   }
+  else
+    dummyddo = NULL;
 
   luaCreateObject(*L, (DICOMDataObject *)sd->DCO, NULL, FALSE); lua_setglobal(*L, "Command");  
   luaCreateObject(*L,                    sd->DDO, NULL, FALSE); lua_setglobal(*L, "Data");
@@ -1788,6 +1791,7 @@ const char *do_lua(lua_State **L, const char *cmd, struct scriptdata *sd)//bcb m
       if (sd->DDO == dummyddo) 
       { sd->DDO = NULL;
         delete dummyddo;
+	dummyddo = NULL;
       }
       lua_pop(*L, 1);
       return NULL;
@@ -1803,6 +1807,7 @@ const char *do_lua(lua_State **L, const char *cmd, struct scriptdata *sd)//bcb m
         if (sd->DDO == dummyddo) 
         { sd->DDO = NULL;
           delete dummyddo;
+  	  dummyddo = NULL;
 	}
         lua_pop(*L, 1);
         return NULL;
@@ -1811,6 +1816,7 @@ const char *do_lua(lua_State **L, const char *cmd, struct scriptdata *sd)//bcb m
       { if (sd->DDO == dummyddo) 
         { sd->DDO = NULL;
           delete dummyddo;
+	  dummyddo = NULL;
 	}
         if (lua_isstring(*L, -1))
           return lua_tostring(*L, -1);
