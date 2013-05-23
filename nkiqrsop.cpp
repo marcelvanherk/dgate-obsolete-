@@ -232,7 +232,8 @@
 20130226    bcb	Replaced gpps with IniValue class.  Removed all globals now in IniValue class, fix some warinigs.
                  Version to 1.4.18a.
 20130313	bcb	Merged with 1.4.17a and b.  Fixed all warnings
-
+20130520	bcb	Added JA (all) to AddTransferSyntaxs(), fixed jpeg_type, and a small deplaning fix.
+20130523	mvh	Further fixes in jpeg_type
 */
 
 #define bool BOOL
@@ -4553,26 +4554,28 @@ static void Strip2(DICOMDataObject *pDDO)
 // returns asci 0 if not jpeg or a jx value for the type.
 char jpeg_type(VR *vr)
 {
-    if (vr->Length > 21 && memcmp(vr->Data, "1.2.840.10008.1.2.4.", 20))
+    if (vr->Length > 21 && memcmp(vr->Data, "1.2.840.10008.1.2.4.", 20) == 0)
     {
-        switch (((char *)vr->Data)[20]) {
-            case 5:
-                switch (((char *)(vr->Data))[21]) {
-					case 0: return '3';//1.2.840.10008.1.2.4.50
-					case 1: return '4';//1.2.840.10008.1.2.4.51
-					case 3: return '5';//1.2.840.10008.1.2.4.52
-					case 5: return '6';//1.2.840.10008.1.2.4.55
-					case 7: return '2';//1.2.840.10008.1.2.4.57
+        char *anum;
+        anum = (char *)(vr->Data) + 20;
+        switch (*anum++) {
+            case '5':
+                switch (*anum) {
+					case '0': return '3';//1.2.840.10008.1.2.4.50
+					case '1': return '4';//1.2.840.10008.1.2.4.51
+					case '3': return '5';//1.2.840.10008.1.2.4.52
+					case '5': return '6';//1.2.840.10008.1.2.4.55
+					case '7': return '2';//1.2.840.10008.1.2.4.57
                     default: return '0';//Unknown
                 }
-            case 7:
-                if (((char *)vr->Data)[20]=='0')return '1';//1.2.840.10008.1.2.4.70
+            case '7':
+                if (*anum == '0')return '1';//1.2.840.10008.1.2.4.70
                 return '0';//Unknown
 #ifdef HAVE_J2K // JPEG 2000 stuff
-            case 9:
-                switch (((char *)(vr->Data))[21]) {
-					case 0: return 'k';//1.2.840.10008.1.2.4.90
-					case 1: return 'l';//1.2.840.10008.1.2.4.91
+            case '9':
+                switch (*anum) {
+					case '0': return 'k';//1.2.840.10008.1.2.4.90
+					case '1': return 'l';//1.2.840.10008.1.2.4.91
                     default: return '0';//Unknown
                 }
 #endif
@@ -4710,7 +4713,7 @@ BOOL recompress(DICOMDataObject **pDDO, const char *Compression, const char *Fil
                 if(!(*pDDO)->GetBYTE(0x0028, 0x0006)) // deplaning should happen 20101220
                 {//No planes in Ux
                     vr = (*pDDO)->GetVR(0x0002, 0x0010);
-                    if (vr && vr->Data && vr->Length > 17 && memcmp(vr->Data, "1.2.840.10008.1.2", 17))
+                    if (vr && vr->Data && vr->Length > 17 && memcmp(vr->Data, "1.2.840.10008.1.2", 17) == 0)//20130520	bcb
                     {
                         switch (Compression[1])
                         {
@@ -5090,11 +5093,20 @@ ExtendedPDU_Service	::	AddTransferSyntaxs(PresentationContext &PresContext)
 		{
 		switch(RequestedCompressionType[1])
 			{
-/*			case '1': // lossless
-				  uid.Set("1.2.840.10008.1.2.4.70"); TrnSyntax.Set(uid);
+			case 'a': // all
+			case 'A': // All
+				  uid.Set("1.2.840.10008.1.2.4.50"); TrnSyntax.Set(uid);
 				  PresContext.AddTransferSyntax(TrnSyntax);
-				  break;
-*/				 
+				  uid.Set("1.2.840.10008.1.2.4.51"); TrnSyntax.Set(uid);
+				  PresContext.AddTransferSyntax(TrnSyntax);
+				  uid.Set("1.2.840.10008.1.2.4.53"); TrnSyntax.Set(uid);
+				  PresContext.AddTransferSyntax(TrnSyntax);
+#ifdef HAVE_J2K // JPEG 2000 stuff
+				  uid.Set("1.2.840.10008.1.2.4.91"); TrnSyntax.Set(uid);
+				  PresContext.AddTransferSyntax(TrnSyntax);
+				  uid.Set("1.2.840.10008.1.2.4.90"); TrnSyntax.Set(uid);
+				  PresContext.AddTransferSyntax(TrnSyntax);
+#endif			// Fall through for 57 and 70.
 			// bcb: should not j1 & J2 offer both types of lossless.
 			case '1': // lossless
 			case '2': // losless sv 6
