@@ -58,7 +58,7 @@ bcb 20120820: Added ACRNemaMap class and IP wild carding
 bcb 20130226: Replaced gpps with IniValue class.  Removed all globals now in IniValue class. Version to 1.4.18a.
 */
 
-#define DGATE_VERSION "1.4.18a"
+#define DGATE_VERSION "1.4.18a3"
 
 #ifndef UNIX
 #	include	<direct.h>
