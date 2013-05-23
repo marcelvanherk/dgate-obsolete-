@@ -8,6 +8,7 @@ bcb 20120820  Changes for amap ip wildcards and Dictionary base dir.
 bcb 20130226  Replaced gpps with IniValue class .
                 Made ACRNemaClass a singleton.  Version to 1.4.18a.
 bcb 20130226  Killed line0,1,... and sourceOrLine0.
+mvh 20130523  fixed 'webscriptad(d)ress'
 */
 
 #ifndef UNIX
@@ -1994,6 +1995,7 @@ windowname = AiViewer V1.00
           lua_setvar(&globalPDU, "address",         ServerCommandAddress);
           lua_setvar(&globalPDU, "webcodebase",     iniValuePtr->sscscpPtr->WebCodeBase);
           lua_setvar(&globalPDU, "webscriptadress", iniValuePtr->sscscpPtr->WebScriptAddress);
+          lua_setvar(&globalPDU, "webscriptaddress", iniValuePtr->sscscpPtr->WebScriptAddress);
           lua_setvar(&globalPDU, "extra",           extra);
           lua_setvar(&globalPDU, "version",         DGATE_VERSION);
           lua_setvar(&globalPDU, "mode",            mode);
