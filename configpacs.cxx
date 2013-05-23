@@ -30,6 +30,7 @@
  bcb 20130402: Used new file.xpp for file opening.
  bcb 20130416: Data Soucre type (name/file) set by dbtype, fixed win backslash.
                 Fixed some full paths. Fixed blank line check for arrays.
+ bcb 20130521: Fixed quotes in command lines.
 */
 
 #define NAME_SECTION_SEPERATOR ':'
@@ -248,6 +249,9 @@ void IniValue        ::       defaultIni()
 //        strcpy(sscscpTmpPtr->ACPipeName,                 "\\\\.\\pipe\\MicroPACSAccess");//Unused!
         strcpy(sscscpTmpPtr->ACRNemaMap,                 ".\\acrnema.map");
         strcpy(sscscpTmpPtr->Dictionary,                 ".\\dgate.dic");
+#ifdef DGJAVA
+        strcpy(sscscpTmpPtr->JavaHapiDirectory,              ".\\javahl7");
+#endif
         strcpy(sscscpTmpPtr->kFactorFile,                ".\\dicom.sql");
         strcpy(sscscpTmpPtr->OCPipeName,                 "\\\\.\\pipe\\MicroPACSStatus");
         addToCharArray(".\\data\\", &(sscscpTmpPtr->MAGDevicePtr));
@@ -255,6 +259,9 @@ void IniValue        ::       defaultIni()
 //        strcpy(sscscpTmpPtr->ACPipeName,                 "/tmp/MicroPACSAccess");//Unused!
         strcpy(sscscpTmpPtr->ACRNemaMap,                 "acrnema.map");
         strcpy(sscscpTmpPtr->Dictionary,                 "dgate.dic");
+#ifdef DGJAVA
+        strcpy(sscscpTmpPtr->JavaHapiDirectory,              "javahl7");
+#endif
         strcpy(sscscpTmpPtr->kFactorFile,                "dicom.sql");
         strcpy(sscscpTmpPtr->OCPipeName,                 "/tmp/MicroPACSStatus");
         addToCharArray("./data/", &(sscscpTmpPtr->MAGDevicePtr));
@@ -290,6 +297,9 @@ void IniValue        ::       defaultIni()
         sscscpTmpPtr->ImageQuerySortOrder[0]             = 0;
         strcpy(sscscpTmpPtr->ImageTableName,             "DICOMImages");
         sscscpTmpPtr->IndexDBF                           = 10;
+#ifdef DGJAVA
+        sscscpTmpPtr->JavaMinVersion                     = JNI_VERSION_1_2;
+#endif
         sscscpTmpPtr->LongQueryDBF                       = 1000;
         sscscpTmpPtr->LossyQuality                       = DEFAULT_LOSSY;
 // When LRUSort was delared it was set to "StudyDate" and changed to "" when read from ini.
@@ -517,6 +527,9 @@ void IniValue        ::       DumpIni(FILE *outputFile)
         sscbprint(ImportExportDragAndDrop)
         sscstprint(IncomingCompression)
         ssciprint(IndexDBF)
+#ifdef DGJAVA
+        sscstprint(JavaHapiDirectory)
+#endif
         sscstprint(kFactorFile)
         ssciprint(LongQueryDBF)
         ssciprint(LossyQuality)
@@ -974,6 +987,11 @@ int* IniValue        ::       GetIniInitPtr(const char *theName, const char *the
                         case DPT_TIME:
                         case DPT_UNKNOWN:
                                 break;
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+                                returnPtr = (int *)&(sscscpPtr->JavaMinVersion);
+                                break;
+#endif
                 }
                 sscscpTmpPtr = NULL;//Set back to NULL
         }
@@ -1042,6 +1060,9 @@ int* IniValue        ::       GetIniInitPtr(const char *theName, const char *the
                                         case DPT_TIME:
                                         case DPT_UINT:
                                         case DPT_PATH:
+#ifdef DGJAVA
+                                        case DPT_MIN_JAVA:
+#endif
                                                 break;
                                                 
                                 }
@@ -1232,28 +1253,28 @@ char* IniValue        ::       GetIniString(const char *theName, const char *the
                                 break;
                         case DPT_FOR_ASSOC:
                                 switch (sscscpPtr->Level)
-                        {
-                                case LT_PATIENT:
-                                        strcpy(returnStr, "Patient");
-                                        break;
-                                case LT_STUDY:
-                                        strcpy(returnStr, "Study");
-                                        break;
-                                case LT_SERIES:
-                                        strcpy(returnStr, "Series");
-                                        break;
-                                case LT_IMAGE:
-                                        strcpy(returnStr, "Image");
-                                        break;
-                                case LT_SOPCLASS:
-                                        strcpy(returnStr, "Sopclass");
-                                        break;
-                                case LT_GLOBAL:
-                                        strcpy(returnStr, "Global");
-                                        break;
-                                default:
-                                        break;
-                        }
+                                {
+                                        case LT_PATIENT:
+                                                strcpy(returnStr, "Patient");
+                                                break;
+                                        case LT_STUDY:
+                                                strcpy(returnStr, "Study");
+                                                break;
+                                        case LT_SERIES:
+                                                strcpy(returnStr, "Series");
+                                                break;
+                                        case LT_IMAGE:
+                                                strcpy(returnStr, "Image");
+                                                break;
+                                        case LT_SOPCLASS:
+                                                strcpy(returnStr, "Sopclass");
+                                                break;
+                                        case LT_GLOBAL:
+                                                strcpy(returnStr, "Global");
+                                                break;
+                                        default:
+                                                break;
+                                }
                                 break;
                         case DPT_SKIP:
                                 break;
@@ -1263,6 +1284,24 @@ char* IniValue        ::       GetIniString(const char *theName, const char *the
                         case DPT_UNKNOWN:
                                 returnBuf = intTableValue(sscscpPtr->iniTablePtr, theName);
                                 break;
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+                                switch (sscscpPtr->JavaMinVersion)
+                                {
+                                        case JNI_VERSION_1_1:
+                                                strcpy(returnStr, "1.1");
+                                                break;
+                                        case JNI_VERSION_1_4:
+                                                strcpy(returnStr, "1.4");
+                                                break;
+                                        case JNI_VERSION_1_6:
+                                                strcpy(returnStr, "1.6");
+                                                break;
+                                        default:
+                                                strcpy(returnStr, "1.2");
+                                                break;
+                                }
+#endif
                 }
                 sscscpTmpPtr = NULL;//Set back to NULL
         }
@@ -1340,6 +1379,9 @@ char* IniValue        ::       GetIniString(const char *theName, const char *the
                                         case DPT_TIME:
                                         case DPT_UINT:
                                         case DPT_PATH:
+#ifdef DGJAVA
+                                        case DPT_MIN_JAVA:
+#endif
                                                 break;
                                                 
                                 }
@@ -1388,6 +1430,9 @@ char* IniValue        ::       GetIniString(const char *theName, const char *the
                                                 case DPT_TIME:
                                                 case DPT_PATH:
                                                 case DPT_BOOL:
+#ifdef DGJAVA
+                                                case DPT_MIN_JAVA:
+#endif
                                                         break;
                                                         
                                         }
@@ -1457,6 +1502,9 @@ char* IniValue        ::       GetIniString(const char *theName, const char *the
                                                 case DPT_TIME:
                                                 case DPT_PATH:
                                                 case DPT_BOOL:
+#ifdef DGJAVA
+                                                case DPT_MIN_JAVA:
+#endif
                                                         break;
                                                         
                                         }
@@ -1524,6 +1572,9 @@ int IniValue        ::       GetIniStringLen(const char *theName, char **strH, c
                         case DPT_FOR_ASSOC:
                         case DPT_SKIP:
                         case DPT_TIME:
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+#endif
                                 break;
                 }
                 sscscpTmpPtr = NULL;//Set back to NULL
@@ -1598,6 +1649,9 @@ int IniValue        ::       GetIniStringLen(const char *theName, char **strH, c
                                         case DPT_TIME:
                                         case DPT_UINT:
                                         case DPT_PATH:
+#ifdef DGJAVA
+                                        case DPT_MIN_JAVA:
+#endif
                                                 break;
                                                 
                                 }
@@ -1643,6 +1697,9 @@ int IniValue        ::       GetIniStringLen(const char *theName, char **strH, c
                                                 case DPT_TIME:
                                                 case DPT_PATH:
                                                 case DPT_BOOL:
+#ifdef DGJAVA
+                                                case DPT_MIN_JAVA:
+#endif
                                                         break;
                                                         
                                         }
@@ -1703,6 +1760,9 @@ int IniValue        ::       GetIniStringLen(const char *theName, char **strH, c
                                                 case DPT_TIME:
                                                 case DPT_PATH:
                                                 case DPT_BOOL:
+#ifdef DGJAVA
+                                                case DPT_MIN_JAVA:
+#endif
                                                         break;
                                                         
                                         }
@@ -2023,6 +2083,11 @@ DATAPTRTYPE IniValue        ::       getTypeForsscscp()
                         break;
                 case 'J':
                 case 'j':
+#ifdef DGJAVA
+                        checkAndReturnFullPath(sscscpTmpPtr->JavaHapiDirectory, avadirectory)//JavaHapiDirectory
+                        if(lstrileq("avaminversion"))//JavaMinVersion
+                                return DPT_MIN_JAVA;
+#endif
                         checkAndReturnStringforArray(sscscpTmpPtr->JUKEBOXDevicePtr,ukeboxdevice)//JUKEBOXDeviceN
                         break;
                 case 'K':
@@ -2937,6 +3002,9 @@ BOOL IniValue        ::       readlua()
                         case DPT_TIME:
                         case DPT_PATH:
                         case DPT_BOOL:
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+#endif
                                 break;
                 }
         }
@@ -3036,6 +3104,9 @@ BOOL IniValue        ::       readsourceLines(sourceLines **lsourceLinesH)
                         case DPT_TIME:
                         case DPT_PATH:
                         case DPT_BOOL:
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+#endif
                                 break;
                 }
         }
@@ -3157,6 +3228,15 @@ BOOL IniValue        ::       readsscscp()
                                 else if (strileq(tempStr, "sopclass"))sscscpTmpPtr->Level = LT_SOPCLASS;
                                 else if (strileq(tempStr, "global")) sscscpTmpPtr->Level = LT_GLOBAL;
                                 break;
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+                                setStringLim(tempStr);
+                                if(tempStr[0] == 0)break;
+                                if      (strileq(tempStr, "1.1")) sscscpTmpPtr->JavaMinVersion = JNI_VERSION_1_1;
+                                else if (strileq(tempStr, "1.4")) sscscpTmpPtr->JavaMinVersion = JNI_VERSION_1_4;
+                                else if (strileq(tempStr, "1.6")) sscscpTmpPtr->JavaMinVersion = JNI_VERSION_1_6;
+                                else sscscpTmpPtr->JavaMinVersion = JNI_VERSION_1_2;
+#endif
                         case DPT_FILE_COMP:
                                 setIniUINT(&(sscscpTmpPtr->FileCompressMode));
                                 if (sscscpTmpPtr->FileCompressMode > 4)
@@ -3337,6 +3417,9 @@ BOOL IniValue        ::       readwebdefaults()
                         case DPT_TIME:
                         case DPT_PATH:
                         case DPT_BOOL:
+#ifdef DGJAVA
+                        case DPT_MIN_JAVA:
+#endif
                                 break;
                 }
         }
@@ -3475,12 +3558,14 @@ void IniValue        ::       setIniString(char *outStr, unsigned int limit)
                                 *outStr = 0;
                                 return;
                         case '\"':
-                                i++;//Skip the quote, than "almost" blind copy.
+                                *outStr++ = pSrc[i++];//Copy the quote for commands.
+//                                i++;//Skip the quote, than "almost" blind copy. Importconverter problem
                                 while(limit > 0 && i < iSize)
                                 {
                                         if(pSrc[i] == '\"')
                                         {
-                                                i++;//Dump the last Quote
+                                                *outStr++ = pSrc[i++];//Copy the quote for commands
+//                                                i++;//Dump the last Quote
                                                 break;
                                         }
                                 // The only thing we need to escappe in a quote is a quote char.
