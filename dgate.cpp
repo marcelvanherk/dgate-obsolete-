@@ -944,11 +944,18 @@ mvh 20090616: Add ^/~ after % command to convert to upper/lowercase, %^ %~ %[; f
 			Made ACRNemaClass a singleton. Version to 1.4.18a.
 20130328	bcb Merged with 1.4.17b
 20130416	bcb 	Removed else do_lua(&(globalPDU.L), "", &sd)
+20130320	mvh	Fix BackGroundExec with spaces in path
+20130321	mvh	Add BaseDir\clibs to path; added missing logs for converters such as rm
+20130502	mvh	Added \nAccess-Control-Allow-Origin: * or \nAccess-Control-Allow-Origin:*
+                                to all WADO generated messages, the space is omitted to force header EVEN
+20130502	mvh	1.4.17beta2 update
+20130520	bcb	Fixed ImportConverter.
+20130522	mvh	Fixed setting path to Basedir\clibs
 
 ENDOFUPDATEHISTORY
 */
 
-//#define DGATE_VERSION "1.4.18a"
+//#define DGATE_VERSION "1.4.18a2"
 
 //#define DO_LEAK_DETECTION	1
 //#define DO_VIOLATION_DETECTION	1
@@ -3546,6 +3553,7 @@ BackgroundExec(
 	SECURITY_ATTRIBUTES	SA;
 	HANDLE			hMap;
 	char			CommandLine[1024];
+	char			quote[10];
 
 	memset((void*)&SINFO, 0, sizeof(STARTUPINFO));
 	SINFO.cb = sizeof(STARTUPINFO);
@@ -3553,11 +3561,18 @@ BackgroundExec(
 	SA.nLength = sizeof (SECURITY_ATTRIBUTES);
 	SA.lpSecurityDescriptor = NULL;
 	SA.bInheritHandle = TRUE;
+                    
+            if (strchr(ProcessBinary, ' '))
+            { quote[0]='"';
+                    quote[1]=0;
+            }
+            else
+                    quote[0]=0;
 
 	if (Args[0])
-		sprintf(CommandLine, "%s %s", ProcessBinary, Args);
+		sprintf(CommandLine, "%s%s%s %s", quote, ProcessBinary, quote, Args);
 	else
-		sprintf(CommandLine, "%s", ProcessBinary);
+		sprintf(CommandLine, "%s%s%s", quote, ProcessBinary, quote);
 
 	if(!CreateProcess(ProcessBinary, CommandLine, NULL, NULL, TRUE,
 		DETACHED_PROCESS, NULL, NULL, &SINFO, &PINFO))
@@ -5333,7 +5348,8 @@ BOOL CallExportConverterN(char *pszFileName, int N, char *pszModality, char *psz
       { char cline[512];
         strcpy(cline, line+7);
         system(cline);
-	//BackgroundExec(cline, "");
+        //BackgroundExec(cline, "");
+        SystemDebug.printf("Exportconverter%d.%d: %s\n", N, part, line);
       }
 
       /* converter: mkdir (command line can be generated using all % tricks) */
@@ -5348,6 +5364,7 @@ BOOL CallExportConverterN(char *pszFileName, int N, char *pszModality, char *psz
 	    mkdir(s);
 	  }
         mkdir(cline); // 20120829
+        SystemDebug.printf("Exportconverter%d.%d: %s\n", N, part, line);
       }
 
       /* converter: rm (command line can be generated using all % tricks) */
@@ -5356,6 +5373,7 @@ BOOL CallExportConverterN(char *pszFileName, int N, char *pszModality, char *psz
       { char cline[512];
         strcpy(cline, line+3);
         unlink(cline);
+        SystemDebug.printf("Exportconverter%d.%d: %s\n", N, part, line);
       }
 
       else if (memicmp(line, "testmode ", 9)==0)
@@ -5641,11 +5659,11 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
     if(luaIEGroupPtr != NULL && luaIEGroupPtr->ConverterPtr != NULL && (unsigned int)N <= luaIEGroupPtr->ConverterPtr->GetSize())
       strcpy(szExecName, luaIEGroupPtr->ConverterPtr->Get(N));
     if(szExecName[0] != 0)//Found it
-    { struct scriptdata lsd1 = {PDU, NULL, DDO, N, pszModality, pszStationName, pszSop, patid, Storage, 0};
+    { struct scriptdata lsd1 = {PDU, NULL, DDO, N, pszModality, pszStationName, pszSop, patid, Storage, 0, 0};
       do_lua(&(PDU->L), szExecName, &lsd1);
-      if(iEGroupPtr == NULL || iEGroupPtr->ConverterPtr == NULL || (unsigned int)N >= iEGroupPtr->ConverterPtr->GetSize() ||
-         iEGroupPtr->ConverterPtr->Get(N) == NULL) return lsd1.rc;
-      strcpy(szExecName, iEGroupPtr->ConverterPtr->Get(N));
+//      if(iEGroupPtr == NULL || iEGroupPtr->ConverterPtr == NULL || (unsigned int)N >= iEGroupPtr->ConverterPtr->GetSize() ||
+//         iEGroupPtr->ConverterPtr->Get(N) == NULL)
+          return lsd1.rc;
     }
   
     /* filter using modality, stationname, calling and called */
@@ -6796,6 +6814,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
     /* converter: tomono */
     else if (memicmp(line, "tomono", 6)==0)
     { DcmConvertPixelData(DDO, TRUE, FALSE, 0, 0, 0, 0, 0.0, 0.0, 0.0);
+      SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
     }
 
     /* converter: crop */
@@ -6803,6 +6822,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
     { int startx=0, endx=9999, starty=0, endy=9999;
       sscanf(line+5, "%d,%d,%d,%d", &startx, &starty, &endx, &endy);
       DcmConvertPixelData(DDO, FALSE, TRUE, startx, endx, starty, endy, 0.0, 0.0, 0.0);
+      SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
     }
 
     /* converter: system (command line can be generated using all % tricks) */
@@ -6812,6 +6832,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
       strcpy(cline, line+7);
       // BackgroundExec(cline, "");
       system(cline);
+      SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
     }
 
     /* converter: mkdir (command line can be generated using all % tricks) */
@@ -6826,6 +6847,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
 	  mkdir(s);
 	}
       mkdir(cline); // 20120829
+      SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
     }
 
     /* converter: rm (command line can be generated using all % tricks) */
@@ -6834,6 +6856,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
     { char cline[512];
       strcpy(cline, line+3);
       unlink(cline);
+      SystemDebug.printf("%sconverter%d.%d: %s\n", ininame, N, part, line);
     }
 
     /* converter: destroy (will prevent the image from being stored in the database) */
@@ -7479,6 +7502,7 @@ int CallImportConverterN(DICOMDataObject *DDO, int N, char *pszModality, char *p
             
 	    // note; threadnum and dco not implemented
             struct scriptdata sd = {PDU, NULL, DDO, N, pszModality, pszStationName, pszSop, patid, Storage, 0, 0};
+            SystemDebug.printf("Importconverter%d.%d: %s\n", N, part, script);
             do_lua(&(PDU->L), script, &sd);
             rc = sd.rc;
           }
@@ -17248,6 +17272,7 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".gif");
 							FILE *f = fopen(tempfile, "wb");
+							fprintf(f, "Content-type: image/gif\nAccess-Control-Allow-Origin: *\n\n");
 							fprintf(f, "Content-type: image/gif\n\n");
 							fclose(f);
 							ToGif(pDDO, tempfile, size, 1, level, window, frame);
@@ -17256,6 +17281,7 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".gif");
 							FILE *f = fopen(tempfile, "wb");
+							fprintf(f, "Content-type: image/gif\nAccess-Control-Allow-Origin: *\n\n");
 							fprintf(f, "Content-type: image/gif\n\n");
 							fclose(f);
 							ToGif(pDDO, tempfile, size, 1, level, window, 10000+5);
@@ -17264,7 +17290,8 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".jpg");
 							FILE *f = fopen(tempfile, "wb");
-							fprintf(f, "Content-type: image/jpeg\n\n");
+							// ODD HEADER LENGHT AVOIDED HERE
+							fprintf(f, "Content-type: image/jpeg\nAccess-Control-Allow-Origin:*\n\n");
 							fclose(f);
 							ToJPG(pDDO, tempfile, size, 1, level, window, frame);
 							}
@@ -17287,7 +17314,8 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".mpg");
 							FILE *f = fopen(tempfile, "wb");
-							fprintf(f, "Content-type: video/mpeg\n\n");
+							// ODD HEADER LENGHT AVOIDED HERE
+							fprintf(f, "Content-type: video/mpeg\nAccess-Control-Allow-Origin:*\n\n");
 							fclose(f);
       							// ToMPEG(tempfile, pDDO);
 							}
@@ -17295,7 +17323,7 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".txt");
 							FILE *f = fopen(tempfile, "wb");
-							fprintf(f, "Content-type: text/plain\n\n");
+                                                                                            fprintf(f, "Content-type: text/plain\nAccess-Control-Allow-Origin: *\n\n");
 							NonDestructiveDumpDICOMObject(pDDO, f);
 							fputc(' ', f); // 20120829 help to make even length
 							strcpy(SilentText, "text/plain");
@@ -17305,7 +17333,8 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 							{
 							NewTempFile(tempfile, ".html");
 							FILE *f = fopen(tempfile, "wb");
-							fprintf(f, "Content-type: text/html\n\n");
+							// ODD HEADER LENGHT AVOIDED HERE
+							fprintf(f, "Content-type: text/html\nAccess-Control-Allow-Origin:*\n\n");
 							NonDestructiveDumpDICOMObject(pDDO, f);
 							fclose(f);
 							}
@@ -17527,16 +17556,20 @@ BOOL StorageApp	::	ServerChild (int theArg, unsigned int remoteIP )
 				if (len)
 					{
 					unsigned int extra=0;
-					if (memcmp(SilentText, "convert_to_dicom:", 17)==0) extra=33;
-					if (memcmp(SilentText, "export:", 7)==0) 	    extra=31;
+					if (memcmp(SilentText, "convert_to_dicom:", 17)==0) extra=64;
+					if (memcmp(SilentText, "export:", 7)==0) 	    extra=62;
 					if (memcmp(SilentText, "text/plain", 10)==0) // 20120829 force even
 					{ if (len & 1) len--;
 					}
 					VR *vr2 = new VR(0x9999, 0x0401, len+extra, TRUE);
 					FILE *f;
 					f = fopen(tempfile, "rb");
-					if (extra==33) sprintf((char *)(vr2->Data), "Content-type: application/dicom\n\n"); // 33 extra bytes
-					if (extra==31) sprintf((char *)(vr2->Data), "Content-type: application/zip\n\n"); // 31 extra bytes
+					if (extra==64) sprintf((char *)(vr2->Data),
+                                                                "Content-type: application/dicom\nAccess-Control-Allow-Origin: *\n\n");
+					// 64 extra bytes
+					if (extra==62) sprintf((char *)(vr2->Data),
+                                                                "Content-type: application/zip\nAccess-Control-Allow-Origin: *\n\n");
+					// 62 extra bytes
 					fread((char*)(vr2->Data)+extra, 1, len, f);
                                 	fclose(f); 
 					SOPVerification.WriteResponse(&PDU, &DCO, vr2);
@@ -17864,6 +17897,20 @@ main ( int	argc, char	*argv[] )
 		printf("MicroPACS entry in %s not found, but required.\n", iniValuePtr->sscscpPtr->MicroPACS);
 		exit(EXIT_FAILURE);
 		}
+#ifndef UNIX
+            char *path = getenv("PATH");
+            if (path)
+            {
+                    char newpath[2048];
+		    char *BaseDir = iniValuePtr->GetBasePath();
+
+                    strcpy(newpath, BaseDir);
+                    strcat(newpath, "clibs\\;");
+                    strcat(newpath, path);
+                    SetEnvironmentVariable("PATH", newpath);
+            }
+#endif
+                    
 	char	*query_string = getenv( "CONTENT_LENGTH" );
 	if (query_string && *query_string && argc==1) 
 		{
@@ -18424,15 +18471,21 @@ BOOL SendServerCommand(const char *NKIcommand1, const char *NKIcommand2, int con
 					}
 
 				if (html)
-				{ char *buf1 = (char *)malloc(1000000);
-                                  int len = processhtml(buf1, (char *)vr->Data, vr->Length);
-				  if (len>1 && buf1[len-1]==0 && (len&1)==0) len--;
-				  write(con, buf1, len);
-                                  free(buf1);
-                                }
+					{ char *buf1 = (char *)malloc(1000000);
+					int len = processhtml(buf1, (char *)vr->Data, vr->Length);
+					if (len>1 && buf1[len-1]==0 && (len&1)==0) len--;
+					write(con, buf1, len);
+					free(buf1);
+					}
 				else
-				  write(con, vr->Data, vr->Length);
-				}
+                                                { int len = vr->Length;
+                                                        // assume header is EVEN for application/dicom
+                                                        //if (len>33)
+                                                        //if (memcmp(vr->Data, "Content-type: application/dicom\n", 32)==0)
+                                                        //len--;
+                                                        write(con, vr->Data, len);
+                                                }
+                                        }
 			}
 		delete vr;
 		}
