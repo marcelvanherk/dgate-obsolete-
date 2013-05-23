@@ -59,7 +59,7 @@
 20120723   mvh   bcb fixed datefix (extra ; after if)
 20120820   bcb   Fixed unused warning
 20130313   bcb   Merged with 1.4.17a.
- 
+20130514   bcb   Fixed Big Endian parse, fixed warnings with strnlen32u()
 */
 
 /****************************************************************************
@@ -298,12 +298,12 @@ BOOL	PDU_Service	::	ParseRawVRIntoDCM(BYTE	PCID, LinkedBuffer	&lVRBuffer, DICOMO
 			pVR = DCMObject->GetVR(0x0002, 0x0010);
 			if (pVR)
 				{
-				pVR->ReAlloc(strlen((char*)uid.GetBuffer(0)));
+				pVR->ReAlloc(strnlen32u((char*)uid.GetBuffer(0)));
 				memcpy((char*)pVR->Data, (char*)uid.GetBuffer(0), pVR->Length);
 				}
 				else
 				{
-				pVR = new VR(0x0002, 0x0010, strlen((char*)uid.GetBuffer(0)),
+				pVR = new VR(0x0002, 0x0010, strnlen32u((char*)uid.GetBuffer(0)),
 				strdup((char*)uid.GetBuffer(0)), TRUE); 
 				DCMObject->Push(pVR);
 				}
@@ -797,6 +797,13 @@ BOOL	PDU_Service	::	Explicit_ParseRawVRIntoDCM(LinkedBuffer	&lVRBuffer, DICOMObj
 	UINT16	Length16;
 //	DICOMObject	*EBO;		// Embedded sequence Object
 	BYTE		s1[2];
+    BOOL        swapEndian = false;
+    
+	if(BIG_ENDIAN == lVRBuffer.GetIncomingEndian())//bcb Big Endian fix
+		{
+		lVRBuffer.SetIncomingEndian(LITTLE_ENDIAN);//Everything starts as little.
+		swapEndian = true;
+		}
 
 	unsigned int	CurrentGroup = 0;
 	unsigned int	CurrentElement = 0;
@@ -812,6 +819,12 @@ BOOL	PDU_Service	::	Explicit_ParseRawVRIntoDCM(LinkedBuffer	&lVRBuffer, DICOMObj
 			return ( FALSE );	// memory error
 
 		lVRBuffer >> vr->Group;
+		if (swapEndian && vr->Group > 0x02)//after 0x02 change back
+			{
+			vr->Group = SwitchEndian(vr->Group);
+			lVRBuffer.SetIncomingEndian(BIG_ENDIAN);
+			swapEndian = false;
+			}
 		lVRBuffer >> vr->Element;
 
 		if (vr->Group < CurrentGroup)
@@ -1298,13 +1311,6 @@ BOOL	PDU_Service	::	Dynamic_ParseRawVRIntoDCM(
 				return FALSE;
 			}
 
-		if (vr->Group != CurrentGroup)
-			{
-			CurrentGroup = vr->Group;
-			CurrentElement = 0;
-			CurrentGroupLength = 0xffffffff;
-			}
-
 		if(vr->Group > 0x0002)
 			{
 			// Key on the vrTRN
@@ -1313,7 +1319,7 @@ BOOL	PDU_Service	::	Dynamic_ParseRawVRIntoDCM(
 				{
 				memset((void*)s, 0,128);
 				memcpy((void*)s,vrTRN->Data, vrTRN->Length%64);
-				sLen = strlen(s);
+				sLen = strnlen32u(s);
 				if(sLen)
 					{
 					if(s[sLen-1]==' ')
@@ -1350,6 +1356,13 @@ BOOL	PDU_Service	::	Dynamic_ParseRawVRIntoDCM(
 				}
 			}
 
+		if (vr->Group != CurrentGroup)//Bcb must be done after "Big Endian" check
+			{
+			CurrentGroup = vr->Group;
+			CurrentElement = 0;
+			CurrentGroupLength = 0xffffffff;
+			}
+            
 		lVRBuffer >> vr->Element;
 
 		if (vr->Element < CurrentElement)
@@ -1729,7 +1742,7 @@ BOOL	PDU_Service	::	Dynamic_ParseDCMIntoRawVR(
 			UINT		Index2,sLen;
 			memset((void*)s, 0,128);
 			memcpy((void*)s,vrTRN->Data, vrTRN->Length%64);
-			sLen = strlen(s);
+			sLen = strnlen32u(s);
 			if(sLen)
 				{
 				if(s[sLen-1]==' ')
