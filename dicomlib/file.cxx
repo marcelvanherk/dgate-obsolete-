@@ -11,12 +11,17 @@
 * no Windows or Unix problems!
 
  bcb 20130402: Created this file.
+ bcb 20130520: Fixed ; starting a comment. (bad for lua)
 */
 #include <fstream>
 #include <iostream>
 #include <sys/stat.h>
 #include <errno.h>
 #include "file.hpp"
+
+#ifndef UNIX
+#define snprintf _snprintf
+#endif
 
 int fileToBuffer(void **bufferH, const char *theFile, BOOL crlf)
 {
@@ -106,34 +111,34 @@ int fileToBufferWithErr(void **bufferH, const char *theFile, char *errorBuf, int
                 {
                         case INV_HANDLE: strcpylim( errorBuf, "Invalid handle\n", errSize);
                                 return 0;
-                        case ERR_OPEN: _snprintf( errorBuf, errSize,
+                        case ERR_OPEN: snprintf( errorBuf, errSize,
                                         "Can not open the needed file %s: %s\n",
                                         theFile, strerror(errno));
                                 return 0;
-                        case ERR_FSTAB: _snprintf( errorBuf, errSize,
+                        case ERR_FSTAB: snprintf( errorBuf, errSize,
                                         "Can not get the size of %s: %s\n",
                                         theFile, strerror(errno));
                                 return 0;
-                        case ERR_FILE_TYPE: _snprintf( errorBuf, errSize,
+                        case ERR_FILE_TYPE: snprintf( errorBuf, errSize,
                                         "%s is not a file", theFile);
                                 return 0;
-                        case ERR_ALLOC: _snprintf( errorBuf, errSize,
+                        case ERR_ALLOC: snprintf( errorBuf, errSize,
                                         "Memory allocation error: %s", strerror(errno));
                                 return 0;
-                        case ERR_READ: _snprintf( errorBuf, errSize,
+                        case ERR_READ: snprintf( errorBuf, errSize,
                                         "Error reading file %s: %s",
                                         theFile, strerror(errno));
                                 return 0;
                         case ERR_SIZE:if (errno == 0)
                                 {
-                                        _snprintf( errorBuf, errSize,
+                                        snprintf( errorBuf, errSize,
                                                 "The file %s is empty\n",
                                                 theFile);
                                         return 0;
                                 }
                                 if (errno == EFBIG)
                                 {
-                                        _snprintf( errorBuf, errSize,
+                                        snprintf( errorBuf, errSize,
                                                 "The file %s is to big\n",
                                                 theFile);
                                         return 0;
@@ -143,7 +148,7 @@ int fileToBufferWithErr(void **bufferH, const char *theFile, char *errorBuf, int
                                 return 0;
                 }
         }
-        if (errno != 0)_snprintf( errorBuf, errSize,
+        if (errno != 0)snprintf( errorBuf, errSize,
                                "Error while closing %s: %s",
                                theFile, strerror(errno));
         return fSize;
@@ -201,7 +206,7 @@ int decommentBuffer(char *pSrc, int bSize)
                                         *pDest++ = pSrc[curr];//Not a comment, copy and next.
                                         break;
                                 }
-                        case ';':
+//                        case ';'://Bad for lua.
                         case '#'://Comment line.
                                 while (curr<bSize && pSrc[curr] != '\r' && pSrc[curr] != '\n') curr++;//Look for the end of the line.
                                 //delme ?                                if (pDest != pBuffer && pDest[-1] != '\r') *pDest++ = '\r';
